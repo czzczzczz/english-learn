@@ -1,0 +1,96 @@
+﻿<Window
+    x:Class="STranslate.Views.StoryWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:control="clr-namespace:STranslate.Controls"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+    Width="760"
+    Height="620"
+    MinHeight="420"
+    MinWidth="560"
+    ui:WindowHelper.SystemBackdropType="Mica"
+    ui:WindowHelper.UseModernWindowStyle="True"
+    ShowInTaskbar="True"
+    Title="{DynamicResource Vocabulary_StoryTitle}"
+    WindowStartupLocation="CenterOwner">
+
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!--  顶部：标题 + 状态  -->
+        <StackPanel
+            Grid.Row="0"
+            Margin="0,0,0,10"
+            Orientation="Horizontal">
+            <ui:FontIcon
+                Margin="0,0,8,0"
+                VerticalAlignment="Center"
+                FontSize="18"
+                Icon="{x:Static ui:FluentSystemIcons.BookOpen_20_Regular}" />
+            <TextBlock
+                x:Name="PART_Title"
+                VerticalAlignment="Center"
+                Style="{DynamicResource {x:Static ui:ThemeKeys.SubtitleTextBlockStyleKey}}"
+                Text="{DynamicResource Vocabulary_StoryTitle}" />
+            <ui:ProgressRing
+                x:Name="PART_Busy"
+                Width="18"
+                Height="18"
+                Margin="12,0,0,0"
+                VerticalAlignment="Center"
+                IsActive="False"
+                Visibility="Collapsed" />
+        </StackPanel>
+
+        <!--  正文  -->
+        <Border
+            Grid.Row="1"
+            Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+            BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+            BorderThickness="1"
+            CornerRadius="6">
+            <ScrollViewer Padding="14" VerticalScrollBarVisibility="Auto">
+                <RichTextBox
+                    x:Name="PART_Content"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    FontSize="15"
+                    IsDocumentEnabled="True"
+                    IsReadOnly="True"
+                    VerticalScrollBarVisibility="Disabled" />
+            </ScrollViewer>
+        </Border>
+
+        <!--  底部按钮  -->
+        <StackPanel
+            Grid.Row="2"
+            Margin="0,12,0,0"
+            HorizontalAlignment="Right"
+            Orientation="Horizontal">
+            <Button
+                x:Name="PART_Speak"
+                MinWidth="88"
+                Click="OnSpeakClick"
+                Content="{DynamicResource Vocabulary_StoryRead}" />
+            <Button
+                MinWidth="88"
+                Margin="8,0,0,0"
+                Click="OnCopyClick"
+                Content="{DynamicResource Copy}" />
+            <Button
+                MinWidth="88"
+                Margin="8,0,0,0"
+                Click="OnRegenerateClick"
+                Content="{DynamicResource Vocabulary_StoryRegenerate}" />
+            <Button
+                MinWidth="88"
+                Margin="8,0,0,0"
+                Click="OnCloseClick"
+                Content="{DynamicResource Close}" />
+        </StackPanel>
+    </Grid>
+</Window>

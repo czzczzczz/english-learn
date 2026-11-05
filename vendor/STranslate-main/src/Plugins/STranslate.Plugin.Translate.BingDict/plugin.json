@@ -1,0 +1,10 @@
+{
+  "PluginID": "b1d7c2a4f3e84c5d9a6b7c8d9e0f1a2b",
+  "Name": "Bing Dictionary",
+  "Description": "必应词典（网页解析，无需密钥，支持音标/释义/例句）",
+  "Author": "english-learn",
+  "Version": "1.0.0",
+  "Website": "https://cn.bing.com/dict",
+  "ExecuteFileName": "STranslate.Plugin.Translate.BingDict.dll",
+  "IconPath": "icon.png"
+}

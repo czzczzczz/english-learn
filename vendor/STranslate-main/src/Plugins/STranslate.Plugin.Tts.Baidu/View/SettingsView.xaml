@@ -1,0 +1,46 @@
+<UserControl
+    x:Class="STranslate.Plugin.Tts.Baidu.View.SettingsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:STranslate.Plugin.Tts.Baidu.ViewModel"
+    d:DataContext="{d:DesignInstance Type=vm:SettingsViewModel}"
+    d:DesignHeight="260"
+    d:DesignWidth="460"
+    mc:Ignorable="d">
+
+    <StackPanel Margin="4,4,12,12">
+        <TextBlock
+            Margin="0,0,0,12"
+            FontSize="16"
+            FontWeight="SemiBold"
+            Text="朗读设置" />
+
+        <TextBlock Margin="0,0,0,4" Text="单词发音源" />
+        <ComboBox Margin="0,0,0,12" SelectedValue="{Binding WordEngine}" SelectedValuePath="Tag">
+            <ComboBoxItem Content="有道（真人发音）" Tag="Youdao" />
+            <ComboBoxItem Content="百度（合成）" Tag="Baidu" />
+        </ComboBox>
+
+        <TextBlock Margin="0,0,0,4" Text="口音（单词朗读）" />
+        <ComboBox Margin="0,0,0,12" SelectedValue="{Binding Accent}" SelectedValuePath="Tag">
+            <ComboBoxItem Content="美音 US" Tag="US" />
+            <ComboBoxItem Content="英音 UK" Tag="UK" />
+        </ComboBox>
+
+        <TextBlock Margin="0,0,0,4" Text="整句语速" />
+        <ComboBox Margin="0,0,0,12" SelectedValue="{Binding Speed}" SelectedValuePath="Tag">
+            <ComboBoxItem Content="0.5x 慢速" Tag="0.5" />
+            <ComboBoxItem Content="0.75x 稍慢" Tag="0.75" />
+            <ComboBoxItem Content="1.0x 正常" Tag="1" />
+            <ComboBoxItem Content="1.25x 稍快" Tag="1.25" />
+        </ComboBox>
+
+        <Button
+            Width="90"
+            HorizontalAlignment="Left"
+            Command="{Binding SaveCommand}"
+            Content="保存" />
+    </StackPanel>
+</UserControl>

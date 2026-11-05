@@ -1,0 +1,10 @@
+{
+  "PluginID": "f4a1b2c3d4e5465798a0b1c2d3e4f5a6",
+  "Name": "Free Dictionary",
+  "Description": "dictionaryapi.dev 词典（免密钥，英文释义 + 音标 + 例句）",
+  "Author": "english-learn",
+  "Version": "1.0.0",
+  "Website": "https://dictionaryapi.dev/",
+  "ExecuteFileName": "STranslate.Plugin.Translate.FreeDictionary.dll",
+  "IconPath": "icon.png"
+}

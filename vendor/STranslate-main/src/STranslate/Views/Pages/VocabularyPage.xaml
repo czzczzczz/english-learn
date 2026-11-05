@@ -1,0 +1,167 @@
+﻿<ui:Page
+    x:Class="STranslate.Views.Pages.VocabularyPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cnvt="clr-namespace:STranslate.Converters"
+    xmlns:control="clr-namespace:STranslate.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+    xmlns:vm="clr-namespace:STranslate.ViewModels.Pages"
+    Title="Vocabulary"
+    d:DataContext="{d:DesignInstance Type=vm:VocabularyViewModel,
+                                     IsDesignTimeCreatable=False}"
+    d:DesignHeight="600"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <Grid Margin="20,10,20,20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!--  标题 + 计数  -->
+        <StackPanel
+            Grid.Row="0"
+            Margin="0,0,0,12"
+            Orientation="Horizontal">
+            <TextBlock Style="{DynamicResource {x:Static ui:ThemeKeys.SubtitleTextBlockStyleKey}}" Text="{DynamicResource Vocabulary}" />
+            <TextBlock
+                Margin="10,0,0,2"
+                VerticalAlignment="Bottom"
+                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                Text="{Binding TotalCount, StringFormat={}{0} 个词}" />
+        </StackPanel>
+
+        <!--  工具栏：搜索 / 导出 / 清空  -->
+        <Grid Grid.Row="1" Margin="0,0,0,12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <TextBox
+                    MinHeight="32"
+                    VerticalContentAlignment="Center"
+                    Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock
+                    Margin="12,0,0,0"
+                    VerticalAlignment="Center"
+                    Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                    IsHitTestVisible="False"
+                    Text="{DynamicResource Vocabulary_SearchPlaceholder}"
+                    Visibility="{Binding SearchText, Converter={cnvt:EqualToVisibilityConverter}, ConverterParameter=''}" />
+            </Grid>
+            <StackPanel
+                Grid.Column="1"
+                Margin="8,0,0,0"
+                Orientation="Horizontal">
+                <ComboBox
+                    MinWidth="120"
+                    Margin="0,0,8,0"
+                    DisplayMemberPath="Display"
+                    ItemsSource="{Binding PhoneticSystems}"
+                    SelectedValue="{Binding PhoneticSystem, Mode=TwoWay}"
+                    SelectedValuePath="Value"
+                    ToolTip="{DynamicResource Vocabulary_PhoneticSystem}" />
+                <Button MinWidth="96" Command="{Binding GenerateStoryCommand}" Content="{DynamicResource Vocabulary_GenerateStory}" />
+                <Button
+                    MinWidth="88"
+                    Margin="8,0,0,0"
+                    Command="{Binding ExportCommand}"
+                    Content="{DynamicResource Vocabulary_Export}" />
+                <Button
+                    MinWidth="88"
+                    Margin="8,0,0,0"
+                    Command="{Binding ClearCommand}"
+                    Content="{DynamicResource Vocabulary_Clear}" />
+            </StackPanel>
+        </Grid>
+
+        <!--  词表：用 ItemsControl 而不是 ListBox，避免 ListBoxItem 主题样式的资源链  -->
+        <Grid Grid.Row="2">
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                <ItemsControl x:Name="PART_List" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Items}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border
+                                Padding="8,6"
+                                BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                                BorderThickness="0,0,0,1">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock
+                                                FontSize="16"
+                                                FontWeight="SemiBold"
+                                                Text="{Binding Display}" />
+                                            <TextBlock
+                                                Margin="8,0,0,0"
+                                                VerticalAlignment="Bottom"
+                                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                                Text="{Binding Phonetic}" />
+                                        </StackPanel>
+                                        <TextBlock
+                                            Margin="0,2,0,0"
+                                            MaxHeight="40"
+                                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                            Text="{Binding Meaning}"
+                                            TextTrimming="CharacterEllipsis"
+                                            TextWrapping="Wrap" />
+                                        <TextBlock
+                                            Margin="0,2,0,0"
+                                            MaxHeight="56"
+                                            FontSize="12"
+                                            Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                                            Text="{Binding Note}"
+                                            TextTrimming="CharacterEllipsis"
+                                            TextWrapping="Wrap" />
+                                    </StackPanel>
+                                    <StackPanel
+                                        Grid.Column="1"
+                                        VerticalAlignment="Center"
+                                        Orientation="Horizontal">
+                                        <control:IconButton
+                                            Command="{Binding DataContext.SpeakCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                            CommandParameter="{Binding}"
+                                            Icon="{x:Static ui:FluentSystemIcons.Speaker2_20_Regular}"
+                                            ToolTip="{DynamicResource PlayPronunciation}" />
+                                        <control:IconButton
+                                            Command="{Binding DataContext.RemoveCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                            CommandParameter="{Binding}"
+                                            Icon="{x:Static ui:FluentSystemIcons.Delete_20_Regular}"
+                                            ToolTip="{DynamicResource Delete}" />
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+
+            <!--  空态：一条词都没有  -->
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                Text="{DynamicResource Vocabulary_Empty}"
+                TextAlignment="Center"
+                TextWrapping="Wrap"
+                Visibility="{Binding IsEmpty, Converter={cnvt:BoolToVisibilityConverter}}" />
+
+            <!--  空态：有词但没有匹配  -->
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                Text="{DynamicResource Vocabulary_NoMatch}"
+                Visibility="{Binding IsNoMatch, Converter={cnvt:BoolToVisibilityConverter}}" />
+        </Grid>
+    </Grid>
+</ui:Page>

@@ -1,0 +1,10 @@
+{
+  "PluginID": "c2e8d3b5a4f94d6e8b7a9c0d1e2f3a4b",
+  "Name": "Caiyun Translator",
+  "Description": "彩云小译（官方 API，内置测试 token）",
+  "Author": "english-learn",
+  "Version": "1.0.0",
+  "Website": "https://fanyi.caiyunapp.com/",
+  "ExecuteFileName": "STranslate.Plugin.Translate.Caiyun.dll",
+  "IconPath": "icon.png"
+}

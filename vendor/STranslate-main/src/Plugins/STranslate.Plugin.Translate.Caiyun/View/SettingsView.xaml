@@ -1,0 +1,35 @@
+<UserControl
+    x:Class="STranslate.Plugin.Translate.Caiyun.View.SettingsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ikw="http://schemas.inkore.net/lib/ui/wpf"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+    xmlns:vm="clr-namespace:STranslate.Plugin.Translate.Caiyun.ViewModel"
+    d:DataContext="{d:DesignInstance Type=vm:SettingsViewModel}"
+    d:DesignHeight="240"
+    d:DesignWidth="720"
+    mc:Ignorable="d">
+
+    <ikw:SimpleStackPanel Spacing="12">
+        <ui:SettingsCard
+            Description="彩云开放平台（https://docs.caiyunapp.com/lingocloud-api/）申请，新用户有 100 万字免费额度；留空则使用内置测试 token。"
+            Header="Token">
+            <ui:SettingsCard.HeaderIcon>
+                <ui:FontIcon Icon="{x:Static ui:FluentSystemIcons.Key_20_Regular}" />
+            </ui:SettingsCard.HeaderIcon>
+            <TextBox
+                MinWidth="280"
+                ui:ControlHelper.PlaceholderText="token"
+                Text="{Binding Token, UpdateSourceTrigger=PropertyChanged}" />
+        </ui:SettingsCard>
+
+        <ui:SettingsCard Header="保存">
+            <ui:SettingsCard.HeaderIcon>
+                <ui:FontIcon Icon="{x:Static ui:FluentSystemIcons.Save_20_Regular}" />
+            </ui:SettingsCard.HeaderIcon>
+            <Button Command="{Binding SaveCommand}" Content="保存" />
+        </ui:SettingsCard>
+    </ikw:SimpleStackPanel>
+</UserControl>

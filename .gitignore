@@ -1,0 +1,35 @@
+# ---- .NET 构建产物 ----
+bin/
+obj/
+.artifacts/
+*_wpftmp.csproj
+*.user
+.vs/
+.idea/
+
+# ---- 本地工具链（体积大，可复现）----
+toolchain/dotnet/
+toolchain/nuget/
+toolchain/home/
+toolchain/tmp/
+
+# ---- 本地截图与日志（开发过程产物）----
+toolchain/*.png
+toolchain/*.log
+toolchain/*.txt
+toolchain/bingtest/
+
+# ---- 备份与运行时配置（含个人密钥，绝不入库）----
+beifen/
+reserve/
+PortableConfig/
+*.bak-*
+*.bak
+
+# ---- 运行时不外发文件 ----
+publish/
+*.zip
+
+# ---- 系统 ----
+.DS_Store
+Thumbs.db

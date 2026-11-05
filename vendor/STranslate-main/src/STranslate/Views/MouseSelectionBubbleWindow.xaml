@@ -1,0 +1,59 @@
+<Window
+    x:Class="STranslate.Views.MouseSelectionBubbleWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+    Title="STranslate Bubble"
+    Width="44"
+    Height="44"
+    AllowsTransparency="True"
+    Background="Transparent"
+    ResizeMode="NoResize"
+    ShowActivated="False"
+    ShowInTaskbar="False"
+    SizeToContent="Manual"
+    SnapsToDevicePixels="True"
+    Topmost="True"
+    UseLayoutRounding="True"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <!--  划词气泡：选中文本后出现在光标旁，鼠标悬停达到设定延迟后自动翻译  -->
+    <Grid
+        x:Name="BubbleRoot"
+        Background="Transparent"
+        Opacity="0"
+        RenderTransformOrigin="0.5,0.5">
+        <Grid.RenderTransform>
+            <ScaleTransform x:Name="BubbleScaleTransform" />
+        </Grid.RenderTransform>
+
+        <Border
+            x:Name="BubbleBody"
+            Width="36"
+            Height="36"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Background="{DynamicResource {x:Static ui:ThemeKeys.SolidBackgroundFillColorBaseBrushKey}}"
+            BorderBrush="{DynamicResource {x:Static ui:ThemeKeys.ControlStrokeColorDefaultBrushKey}}"
+            BorderThickness="1"
+            CornerRadius="18"
+            Cursor="Hand">
+            <Border.Effect>
+                <DropShadowEffect
+                    BlurRadius="10"
+                    Direction="270"
+                    Opacity="0.35"
+                    ShadowDepth="2" />
+            </Border.Effect>
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="15"
+                FontWeight="SemiBold"
+                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                Text="译" />
+        </Border>
+    </Grid>
+</Window>

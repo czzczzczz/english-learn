@@ -1,0 +1,10 @@
+{
+  "PluginID": "d3f9e4c6b5a84e7f9c8b0d1e2f3a4b5c",
+  "Name": "Baidu TTS",
+  "Description": "百度翻译朗读（无需密钥，中英文均可，Edge TTS 403 时的兜底）",
+  "Author": "english-learn",
+  "Version": "1.0.0",
+  "Website": "https://fanyi.baidu.com/",
+  "ExecuteFileName": "STranslate.Plugin.Tts.Baidu.dll",
+  "IconPath": "icon.png"
+}
