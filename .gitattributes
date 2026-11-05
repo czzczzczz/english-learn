@@ -1,0 +1,12 @@
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.ani binary
+*.zip binary
+*.mp3 binary
+*.dll binary
+*.exe binary
