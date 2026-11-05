@@ -1,4 +1,4 @@
-# 项目档案：english_learn（英语学习工具）
+﻿# 项目档案：english_learn（英语学习工具）
 
 > 稳定事实的权威记录。变更只在本文件维护，其他文档引用路径，不复制内容。
 
@@ -29,37 +29,39 @@
 
 | 用途 | 路径 | 状态 |
 |---|---|---|
-| 项目根 | `D:\vibe_coding\english_learn` | 已确认 |
-| 部署目录（运行/验证） | `D:\vibe_coding\STranslate-dev` | 已确认 |
-| 本地 .NET SDK | `D:\vibe_coding\english_learn\toolchain\dotnet` | 已确认 |
-| NuGet 包缓存 | `D:\vibe_coding\english_learn\toolchain\nuget` | 已确认 |
-| 构建临时目录 | `D:\vibe_coding\english_learn\toolchain\tmp` | 已确认 |
-| 旧备份目录（ZIP） | `D:\vibe_coding\english_learn\beifen` | 已确认 |
-| 备份目录（新规则） | `reserve/` | 已确认 |
-| 下载/导出/产物 | `D:\dsh\downloads` | **待用户确认** |
-| 缓存/临时 | `D:\dsh\cache`（tmp: `D:\dsh\cache\tmp`） | **待用户确认** |
+| 项目根 | `<repo>` | 示例 |
+| 部署目录（运行/验证） | `<deploy-dir>` | 示例 |
+| 本地 .NET SDK | `<repo>/toolchain/dotnet` | 示例 |
+| NuGet 包缓存 | `<repo>/toolchain/nuget` | 示例 |
+| 构建临时目录 | `<repo>/toolchain/tmp` | 示例 |
+| 旧备份目录（ZIP） | `<repo>/beifen` | 示例 |
+| 备份目录（新规则） | `reserve/` | 示例 |
+| 下载/导出/产物 | `<downloads>` | 示例 |
+| 缓存/临时 | `<cache>`（tmp: `<cache>/tmp`） | 示例 |
+
+> 表中的 `<repo>` / `<deploy-dir>` / `<downloads>` / `<cache>` 是占位符，按本地实际情况替换。
 
 ## 4. 构建 / 部署 / 验证
 
 ```bash
 # 构建（必须设置这五个环境变量）
-export DOTNET_CLI_HOME="D:/vibe_coding/english_learn/toolchain/home" \
-       NUGET_PACKAGES="D:/vibe_coding/english_learn/toolchain/nuget" \
-       TMP="D:/vibe_coding/english_learn/toolchain/tmp" \
-       TEMP="D:/vibe_coding/english_learn/toolchain/tmp" \
-       PATH="/d/vibe_coding/english_learn/toolchain/dotnet:$PATH"
+export DOTNET_CLI_HOME="$REPO/toolchain/home" \
+       NUGET_PACKAGES="$REPO/toolchain/nuget" \
+       TMP="$REPO/toolchain/tmp" \
+       TEMP="$REPO/toolchain/tmp" \
+       PATH="$REPO/toolchain/dotnet:$PATH"
 dotnet build STranslate/STranslate.csproj -c Debug -v q          # 主程序
 dotnet build Plugins/<插件目录>/<插件>.csproj -c Debug -v q      # 插件单独构建
 ```
 
-- 部署：`pwsh7 -File toolchain/deploy_tts.ps1`（robocopy 到 `D:\vibe_coding\STranslate-dev`，**排除 `PortableConfig`**，否则会覆盖用户配置）
+- 部署：`pwsh7 -File toolchain/deploy_tts.ps1`（robocopy 到 `<deploy-dir>`，**排除 `PortableConfig`**，否则会覆盖用户配置）
 - 备份：`pwsh7 -File toolchain/backup_code.ps1 -Label "<说明>"`（保留目录层级，落到 `beifen/`）
 
 ### 关键坑（都已踩过）
 
 | 现象 | 原因 / 解法 |
 |---|---|
-| exe 放在工作区运行，鼠标钩子收不到输入 | 工作区 exe 是低完整性；必须从 `D:\vibe_coding\STranslate-dev` 启动 |
+| exe 放在工作区运行，鼠标钩子收不到输入 | 工作区 exe 是低完整性；必须从 `<deploy-dir>` 启动 |
 | 启动即退，无异常日志 | 多为 XAML 解析崩溃。用 `Get-WinEvent Application -ProviderName ".NET Runtime"` 看完整堆栈 |
 | 设置窗口一开就崩 | iNKORE `ui:NumberBox` 在此环境让 `MinWidth` 变成 `UnsetValue`；改用 `ComboBox` |
 | 只读属性绑定到双向 DP | `ui:SettingsCard` 内的 DP 默认双向，绑只读属性要显式 `Mode=OneWay` |
@@ -89,7 +91,7 @@ dotnet build Plugins/<插件目录>/<插件>.csproj -c Debug -v q      # 插件�
 - **点外部隐藏**：未钉住时点窗口外隐藏；钉住时任何路径都不隐藏（`Hide()` 首行拦 `IsUserTopmost`）。
 - **划词 vs 长按**：450ms 内移动超 6px 判为划词；按住不动触发框选。
 - **音标**：词典数据统一存 IPA，显示时按 `PhoneticSystem` 转换；KK 只用于美式，英式保持原样。
-- **导出**：CSV 导到 `D:\dsh\downloads`，不写用户目录。
+- **导出**：CSV 导到 `<downloads>`，不写用户目录。
 
 ## 7. 外部依赖与密钥
 
@@ -100,7 +102,7 @@ dotnet build Plugins/<插件目录>/<插件>.csproj -c Debug -v q      # 插件�
 | Bing 词典（网页解析） | 中英释义 + 例句 | 免 key |
 | 有道 `dictvoice` | 单词真人发音 | 免 key |
 | 百度 `gettts` | 整句合成 | 免 key |
-| AI 中转站（`api.yicode.ai/v1`） | 生词故事 | 用户 key，**需代理 `127.0.0.1:10809`** |
+| OpenAI 兼容中转站 | 生词故事 | 用户自备 key；国内直连不通时需配置代理 |
 
 ## 8. 变更记录
 

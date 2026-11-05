@@ -33,3 +33,4 @@ publish/
 # ---- 系统 ----
 .DS_Store
 Thumbs.db
+docs/session_information.md
